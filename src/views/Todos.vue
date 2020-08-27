@@ -6,11 +6,17 @@
     <AddTodo 
       @add-todo="addTodo"
     />
+    <hr>
+    <select v-model="filter">
+      <option value="all">All</option>
+      <option value="completed">Completed</option>
+      <option value="not-completed">Not-completed</option>
+    </select>
     <hr> 
     <Loader  v-if="loading" />
     <TodoList
-      v-else-if="todos.length"
-      v-bind:todos="todos"
+      v-else-if="fileredTodos.length"
+      v-bind:todos="fileredTodos"
       @remove-todo="removeTodo"
     />
     <p v-else>no todos!</p>
@@ -26,7 +32,8 @@ export default {
   data() {
     return {
       todos: [],
-      loading: true
+      loading: true,
+      filter: 'all',
     }
   },
   mounted() {
@@ -41,6 +48,27 @@ export default {
     TodoList,
     AddTodo,
     Loader
+  },
+  // watch: {
+  //   filter(value) {
+  //     console.log(value);
+  //   }
+  // },
+  computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
+    fileredTodos() {
+      if (this.filter === 'all') {
+        return this.todos;
+      }
+
+      if (this.filter === 'completed') {
+        return this.todos.filter(t => t.completed);
+      }
+
+      if (this.filter === 'not-completed') {
+        return this.todos.filter(t => !t.completed);
+      }
+    }
   },
   methods: {
       removeTodo(id) {
