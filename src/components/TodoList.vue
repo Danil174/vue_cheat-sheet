@@ -5,6 +5,7 @@
                 v-for="todo of todos"
                 v-bind:todo="todo"
                 :key="todo.id"
+                v-on:remove-todo="removeTodo"
             />
         </ul>
     </div>
@@ -16,6 +17,11 @@
         props: ['todos'],
         components: {
             TodoItem
+        },
+        methods: {
+            removeTodo(id) {
+                this.$emit('remove-todo', id)
+            }
         }
     }
 </script>
