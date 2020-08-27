@@ -1,5 +1,12 @@
 <template>
-    <li>item1</li>
+    <li>
+        <span v-bind:class="{done: todo.completed}">
+            <input type="checkbox">
+            <strong>{{todo.id}}</strong>
+            {{todo.title}}
+        </span>
+        <button class="rm">&times;</button>
+    </li>
 </template>
 
 <script>
@@ -12,3 +19,34 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    li {
+        border: 1px solid #ccc;
+        display: flex;
+        justify-content: space-between;
+        padding: .5rem 2rem;
+        margin: 1rem;
+    }
+
+    .rm {
+        background-color: red;
+        border-radius: 50%;
+
+        color: #fff;
+        font-weight: bold; 
+        line-height: 20px;
+
+        height: 20px;
+        width: 20px;
+        border: none;
+    }
+
+    .done {
+        text-decoration: line-through;
+    }
+
+    input {
+        margin-right: 1rem;
+    }
+</style>
